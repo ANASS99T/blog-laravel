@@ -21,14 +21,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
     {{-- <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script> --}}
-
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
 <body>
     <div class="container">
         @yield('content')
     </div>
-    <div style="position:absolute;bottom:10px;right:10px;margin:0;padding:5px 3px;">
+    <div style="position:fixed;bottom:10px;right:10px;margin:0;padding:5px 3px;">
         <x-new-button />
     </div>
 

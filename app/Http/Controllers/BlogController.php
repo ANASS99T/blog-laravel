@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BlogEmail;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -74,7 +76,7 @@ class BlogController extends Controller
         $this->validate($request, [
             'author' => 'required',
             'title' => 'required',
-            'image' => 'required',
+            // 'image' => 'required',
             'body' => 'required',
         ]);
 
@@ -82,6 +84,8 @@ class BlogController extends Controller
             $file = $request->file('image');
             $originalname = microtime() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('public/images', $originalname);
+        } else {
+            $originalname = '';
         }
 
 
@@ -94,9 +98,15 @@ class BlogController extends Controller
 
         // dd('data stored', $blog);
         // $imageLink = url("/images/{$blog->image}");
+        Mail::to(env('MAIL_USERNAME'))->send(new BlogEmail($blog));
+        // Mail::send(new BlogEmail());
+        // if () {
+            dd('Mail is not working');
 
+            return view('blog.detail', ['blog' => $blog]);
+        // } else {
+        // }
         // array_push($blog,$imageLink);
-        return view('blog.detail', ['blog' => $blog]);
     }
 
     /**
@@ -141,7 +151,7 @@ class BlogController extends Controller
     {
 
         if ($request->id != null) {
-            
+
             $blog = Blog::find($request->id);
             $blog->author = $request->author;
             $blog->title = $request->title;

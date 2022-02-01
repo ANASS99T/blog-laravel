@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-12 mb-3">
                         <div class="form-group">
-                            <textarea class="ckeditor form-control" name="body" value={{ $blog->body }}>{{ $blog->body }}</textarea>
+                            <textarea class="ckeditor form-control" style="min-height: 1000px" name="body" value={{ $blog->body }}>{{ $blog->body }}</textarea>
                         </div>
                     </div>
                 </div>
