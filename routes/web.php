@@ -19,7 +19,9 @@ Route::get('/home', [BlogController::class, 'index'])->name('blog');
 Route::get('/new', [BlogController::class, 'create'])->name('blog.new');
 Route::post('/new', [BlogController::class, 'store'])->name('blog.new');
 Route::get('/detail', [BlogController::class, 'show'])->name('blog.detail');
-Route::get('/update', [BlogController::class, 'edit'])->name('blog.update');
+Route::get('/show/{id?}', [BlogController::class, 'show'])->name('blog.detail');
+Route::get('/update/{id}', [BlogController::class, 'edit'])->name('blog.update');
+Route::delete('/delete', [BlogController::class, 'destroy'])->name('blog.delete');
 
 
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');

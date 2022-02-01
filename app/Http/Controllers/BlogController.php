@@ -16,14 +16,29 @@ class BlogController extends Controller
     public function index(Request $request)
     {
 
+        $data = Blog::all();
+        foreach ($data as $blog) {
+            $blog->created_at =  $blog->created_at->format('d-m-Y');
+            $blog->creation = $blog->created_at->format('d-m-Y');
+        }
+        // dd($data);
 
         if ($request->ajax()) {
-            $data = Blog::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                    $btn = '<div class="d-flex align-items-center justify-content-center">
+                    <a href="/show/' . $row->id . '" class="edit btn btn-outline-success btn-sm mx-1">
+                    <i class="far fa-eye"></i>
+                    </a>
+                    <a href="/update/' . $row->id . '" class="edit btn btn-outline-primary btn-sm mx-1">
+                    <i class="fas fa-pen"></i>
+                    </a>
+                    <a href="/delete/' . $row->id . '" class="edit btn btn-outline-danger btn-sm mx-1">
+                    <i class="far fa-trash-alt"></i>
+                    </a>
+                    </div>';
 
                     return $btn;
                 })
@@ -55,6 +70,7 @@ class BlogController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request);
         $this->validate($request, [
             'author' => 'required',
             'title' => 'required',
@@ -62,15 +78,25 @@ class BlogController extends Controller
             'body' => 'required',
         ]);
 
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $originalname = microtime() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('public/images', $originalname);
+        }
+
+
         $blog = Blog::create([
             'author' => $request->author,
             'title' => $request->title,
-            'image' => $request->image,
+            'image' => $originalname,
             'body' => $request->body,
         ]);
 
+        // dd('data stored', $blog);
+        $imageLink = url("/images/{$blog->image}");
 
-        return view('/detail', ['blog' => $blog]);
+        // array_push($blog,$imageLink);
+        return view('blog.detail', ['blog' => $blog, 'link' => $imageLink]);
     }
 
     /**
@@ -79,10 +105,17 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function show(Blog $blog)
+    public function show(Blog $blog = null, $id = null)
     {
+        // dd($blog, $id);
+        // dd($id);
+        if ($blog == null && $id != null) {
 
-        return view('blog.detail');
+            $blog = Blog::find($id);
+            // dd($blog);
+        }
+
+        return view('blog.detail', ['blog' => $blog]);
     }
 
     /**

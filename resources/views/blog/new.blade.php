@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-12 mb-3">
                     <div class="form-group">
-                        <textarea class="ckeditor form-control" name="wysiwyg-editor"></textarea>
+                        <textarea class="ckeditor form-control" name="body"></textarea>
                     </div>
                 </div>
             </div>

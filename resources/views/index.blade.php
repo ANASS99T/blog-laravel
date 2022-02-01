@@ -42,8 +42,8 @@
                         name: 'title'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created _at',
+                        data: 'creation',
+                        name: 'creation',
 
                     },
                     {
