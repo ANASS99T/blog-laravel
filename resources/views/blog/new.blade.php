@@ -9,7 +9,7 @@
             @csrf
             <div class="row">
                 <div class="col-md-6 col-sm-12 mb-3">
-                    <label for="author" class="form-label">Autor</label>
+                    <label for="author" class="form-label">Author</label>
                     <input type="text" class="form-control" id="author" name='author'>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-3">

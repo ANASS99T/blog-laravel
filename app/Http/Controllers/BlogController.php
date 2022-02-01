@@ -93,10 +93,10 @@ class BlogController extends Controller
         ]);
 
         // dd('data stored', $blog);
-        $imageLink = url("/images/{$blog->image}");
+        // $imageLink = url("/images/{$blog->image}");
 
         // array_push($blog,$imageLink);
-        return view('blog.detail', ['blog' => $blog, 'link' => $imageLink]);
+        return view('blog.detail', ['blog' => $blog]);
     }
 
     /**
@@ -124,10 +124,10 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function edit(Blog $blog)
+    public function edit($id)
     {
-
-        return view('blog.update');
+        $blog = Blog::find($id);
+        return view('blog.update', ['blog' => $blog]);
     }
 
     /**
@@ -137,9 +137,32 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update(Request $request)
     {
-        //
+
+        if ($request->id != null) {
+            
+            $blog = Blog::find($request->id);
+            $blog->author = $request->author;
+            $blog->title = $request->title;
+            $blog->body = $request->body;
+
+            // dd($blog);
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $originalname = microtime() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/images', $originalname);
+                $blog->image  = $originalname;
+            }
+
+            $blog->save();
+
+            return redirect('/');
+        }
+
+
+        // dd("here");
+        // dd($request->image);
     }
 
     /**
@@ -148,8 +171,9 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
+    public function destroy($id)
     {
-        //
+        $blog = Blog::find($id);
+        dd($blog);
     }
 }

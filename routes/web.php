@@ -21,7 +21,8 @@ Route::post('/new', [BlogController::class, 'store'])->name('blog.new');
 Route::get('/detail', [BlogController::class, 'show'])->name('blog.detail');
 Route::get('/show/{id?}', [BlogController::class, 'show'])->name('blog.detail');
 Route::get('/update/{id}', [BlogController::class, 'edit'])->name('blog.update');
-Route::delete('/delete', [BlogController::class, 'destroy'])->name('blog.delete');
+Route::post('/update', [BlogController::class, 'update'])->name('blog.update');
+Route::get('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
 
 
 Route::post('ckeditor/upload', 'CKEditorController@upload')->name('ckeditor.image-upload');

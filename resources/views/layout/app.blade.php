@@ -25,17 +25,7 @@
 </head>
 
 <body>
-    {{-- <nav class="containermb-3">
-
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-
-        </ul>
-
-    </nav> --}}
-    <div class="container" style="height: 90%;">
+    <div class="container">
         @yield('content')
     </div>
     <div style="position:absolute;bottom:10px;right:10px;margin:0;padding:5px 3px;">
