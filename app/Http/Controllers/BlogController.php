@@ -174,6 +174,8 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $blog = Blog::find($id);
-        dd($blog);
+        $blog->delete();
+
+        return redirect('/');
     }
 }
